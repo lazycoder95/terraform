@@ -1,4 +1,4 @@
-provider "aws" {
+/*provider "aws" {
     region = "ap-south-1"
 }
 
@@ -8,6 +8,17 @@ resource "aws_eip" "ip" {
 
 resource "aws_security_group" "cross-network" {
     name = "cross reference sg"
+}
+
+resource "aws_instance" "test" {
+  ami = var.ec2_ami
+  instance_type = var.size
+  vpc_security_group_ids = [aws_security_group.cross-network.id]
+  }
+
+resource "aws_eip_association" "example" {
+  instance_id   = aws_instance.test.id
+  allocation_id = aws_eip.ip.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "eip_rule" {
@@ -30,3 +41,6 @@ resource "aws_vpc_security_group_egress_rule" "out_rule" {
 output "public_ip" {
   value= aws_eip.ip.public_ip
 }
+output "instance_id" {
+  value= aws_instance.test.id
+}*/
